@@ -1,0 +1,105 @@
+<div class="main-content">
+    <div class="container-fluid">        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Add Travel</h4>
+                        <p class="card-category">Apply your Tavel Plan</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="vacationForm" (ngSubmit)="addLeave()">
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Enter a date range</mat-label>
+                                        <mat-date-range-input [formGroup]="vacationForm" [min]=minDate [max]=maxDate [rangePicker]="picker">
+                                          <input style="text-align: right" matStartDate formControlName="frmFromDate" placeholder="From Date">
+                                          <input  matEndDate formControlName="frmToDate" placeholder="To Date">
+                                        </mat-date-range-input>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        
+                                        <mat-date-range-picker #picker></mat-date-range-picker>                                      
+                                        <mat-error *ngIf="vacationForm.controls.frmFromDate?.hasError('matStartDateInvalid')">Invalid From Date</mat-error>
+                                        <mat-error *ngIf="vacationForm.controls.frmToDate?.hasError('matEndDateInvalid')">Invalid To Date</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field appearance="outline" class="example-full-width">
+                                    <input matInput placeholder="Remarks" formControlName="frmRemarks" [errorStateMatcher]="matcher" type="text">
+                                    <mat-error *ngIf="vacationForm.get('frmRemarks')?.hasError('maxlength') && !vacationForm.get('frmRemarks')?.hasError('required')">
+                                        Max Length cannot be more than 50 characters.
+                                    </mat-error>
+                                    <mat-error *ngIf="vacationForm.get('frmRemarks')?.hasError('required')">
+                                        Remarks is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                </div>
+                            </div>
+                                <button mat-raised-button type="submit" [disabled]="!vacationForm.valid" class="btn btn-success pull-right" >Update Profile</button>
+                                <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">                            
+                            <img class="img" src="./assets/img/icons/day-off.png" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray"></h6>
+                        <h4 class="card-title">Plan Travel</h4>
+                        <p class="card-description">
+                            Travel Plan will be shown at the bottom of the page. To update the leaves, delete it and add it again.
+                        </p>
+                        <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">My Travel Plan</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-danger">
+                                <th>ID</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Leave Days</th>
+                                <th>Remarks</th>
+                                <th>Delete Records</th>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf='employeeAllDetails!=null && employeeAllDetails.employeeAllDetailsVacation?.length;' > 
+                                    <tr *ngFor='let vacation of employeeAllDetails.employeeAllDetailsVacation; let count=index;'>
+                                        <ng-container *ngIf="vacation.type === 'Travel';" > 
+                                            <td></td>
+                                            <td>{{ vacation.strDateFrom }}</td>
+                                            <td>{{ vacation.strDateTo }}</td>
+                                            <td>{{calculateDaysDiff(vacation.dateTo,vacation.dateFrom)}}</td>
+                                            <td>{{ vacation.remarks }}</td>
+                                            <td><button (click)="deleteLeave(vacation.vacationPrimaryId)">
+                                                <mat-icon>delete_forever</mat-icon>                                                    
+                                            </button>
+                                            </td>
+                                        </ng-container>         
+                                    </tr>
+                                </ng-container> 
+                            </tbody>
+                        </table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

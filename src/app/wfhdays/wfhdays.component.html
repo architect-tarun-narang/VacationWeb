@@ -1,0 +1,89 @@
+<div class="main-content">
+    <div class="container-fluid">      
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">                    
+                        <h4 class="card-title">Add Permanent WFH</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!--<h4 class="mat-h4" >{{firstName}} {{lastName}} ({{employeeCode}}) </h4> -->
+                            </div>
+                        </div>                            
+                        <form [formGroup]="wfhDaysForm" (ngSubmit)="addWFHDays()">
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Days</mat-label>
+                                            <mat-select [formControl]="wfhControl" required (selectionChange)="onWFHSelection($event.value)">
+                                                <mat-option>--</mat-option>
+                                                <mat-option *ngFor="let wfh of WFHDays" [value]="wfh.id">
+                                                {{wfh.days}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="wfhControl.hasError('required')">Please select days</mat-error>
+                                        </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                                <button mat-raised-button type="submit" [disabled]="!wfhDaysForm.valid" class="btn btn-danger pull-right" >Update WFH</button>
+                                <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">                            
+                            <img class="img" src="./assets/img/icons/day-off.png" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray"></h6>
+                        <h4 class="card-title">Permanent WFH</h4>
+                        <p class="card-description">
+                            Permanent WFH days will be shown at the bottom of the page. To update the days, delete it and add it again.
+                        </p>
+                        <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-success">
+                        <h4 class="card-title">My Permanent WFH Plan</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-success">
+                                <th>ID</th>
+                                <th>Fixed WFH Days</th>
+                                <th>Delete Records</th>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf='employeeAllDetails!==null && employeeAllDetails.employeeAllDetailsWFH?.length;' > 
+                                    <tr *ngFor='let wfhdays of employeeAllDetails.employeeAllDetailsWFH; let count=index;'>                                        
+                                            <td>{{count+1}}</td>
+                                            <td>{{ wfhdays.days }}</td>
+                                            <td><button class="mdc-button" (click)="deleteWFHDays(wfhdays.wfhDaysId)">
+                                                <mat-icon>delete_forever</mat-icon>                                                    
+                                            </button>
+                                            </td>                                        
+                                    </tr>
+                                </ng-container> 
+                            </tbody>
+                        </table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

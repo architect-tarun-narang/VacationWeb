@@ -1,0 +1,137 @@
+<div class="main-content">
+    <div class="container-fluid">       
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Add Training</h4>
+                        <p class="card-category">Apply your Training Plan</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="trainingForm" (ngSubmit)="addTraining()">
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Enter a date range</mat-label>
+                                        <mat-date-range-input [formGroup]="trainingForm"  [min]=minDate [max]=maxDate [rangePicker]="picker">
+                                          <input style="text-align: right" matStartDate formControlName="frmFromDate" placeholder="From Date">
+                                          <input  matEndDate formControlName="frmToDate" placeholder="To Date">
+                                        </mat-date-range-input>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        
+                                        <mat-date-range-picker #picker></mat-date-range-picker>                                      
+                                        <mat-error *ngIf="trainingForm.controls.frmFromDate?.hasError('matStartDateInvalid')">Invalid From Date</mat-error>
+                                        <mat-error *ngIf="trainingForm.controls.frmToDate?.hasError('matEndDateInvalid')">Invalid To Date</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Trainings</mat-label>
+                                            <mat-select [formControl]="trainingControl" formControlName="frmTrainingId" required (selectionChange)="onTrainingSelection($event.value)">
+                                                <mat-option>--</mat-option>
+                                                <mat-option *ngFor="let training of trainingTypes" [value]="training.id">
+                                                {{training.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="trainingControl.hasError('required')">Please select training</mat-error>
+                                        </mat-form-field>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field appearance="outline" class="example-full-width">
+                                    <input matInput placeholder="Training Hours" formControlName="frmTrainingHours" [errorStateMatcher]="matcher" type="text">
+                                    <mat-error *ngIf="trainingForm.get('frmTrainingHours')?.hasError('required')">
+                                        Training Hours is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field appearance="outline" class="example-full-width">
+                                    <input matInput placeholder="Remarks" formControlName="frmRemarks" [errorStateMatcher]="matcher" type="text">
+                                    <mat-error *ngIf="trainingForm.get('frmRemarks')?.hasError('maxlength') && !trainingForm.get('frmRemarks')?.hasError('required')">
+                                        Max Length cannot be more than 50 characters.
+                                    </mat-error>
+                                    <mat-error *ngIf="trainingForm.get('frmRemarks')?.hasError('required')">
+                                        Remarks is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                </div>
+                            </div>
+                                <button mat-raised-button type="submit" [disabled]="!trainingForm.valid" class="btn btn-danger pull-right" >Add Training</button>
+                                <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">                            
+                            <img class="img" src="./assets/img/icons/day-off.png" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray"></h6>
+                        <h4 class="card-title">Training Plan</h4>
+                        <p class="card-description">
+                            Training Plan will be shown at the bottom of the page. To update the training, delete it and add it again.
+                        </p>
+                        <!-- <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info card-header-warning">
+                        <h4 class="card-title">My Training Plan</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Training Type</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Training Days</th>
+                                <th> Hours</th>
+                                <th>Remarks</th>
+                                <th>Delete Records</th>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf='employeeAllDetails!=null && employeeAllDetails.employeeAllDetailsTraining?.length;' > 
+                                <ng-container *ngFor="let training of employeeAllDetails.employeeAllDetailsTraining">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{ training.name }}</td>
+                                        <td>{{ training.strDateFrom }}</td>
+                                        <td>{{ training.strDateTo }}</td>
+                                        <td>{{calculateDaysDiff(training.dateTo,training.dateFrom)}}</td>
+                                        <td>{{ training.trainingHours }}</td>
+                                        <td>{{ training.remarks }}</td>
+                                        <td><button (click)="deleteTraining(training.trainingPrimaryId)">
+                                            <mat-icon>delete_forever</mat-icon>                                                    
+                                        </button>
+                                        </td>
+                                    </tr>
+                                    </ng-container> 
+                                </ng-container>    
+                            </tbody>
+                        </table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

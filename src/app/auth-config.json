@@ -1,0 +1,10 @@
+{
+  "credentials": {
+    "clientId": "a570396c-9787-4094-98e3-xxxxxxx",
+    "tenantId": "eb120e12-65f1-477a-be8c-xxxxxxx"
+  },
+  "configuration": {
+    "redirectUri": "http://localhost:4200",
+    "postLogoutRedirectUri": "http://localhost:4200"
+  }
+}

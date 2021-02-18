@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="javascript:void(0)">{{getTitle()}}</a>
+        </div>
+        <button mat-raised-button class="navbar-toggler" type="button" >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <form class="navbar-form">
+                <div class="input-group no-border">
+                    <mat-form-field appearance="">
+                        <mat-label>Date Filter...</mat-label>
+                        <mat-date-range-input [formGroup]="vacationForm" [rangePicker]="picker">
+                          <input style="text-align: right" matStartDate formControlName="frmFromDate" placeholder="From Date" (dateInput)="addFromDateEvent('input', $event)" (dateChange)="addFromDateEvent('change', $event)">
+                          <input  matEndDate formControlName="frmToDate" placeholder="To Date" (dateInput)="addToDateEvent('input', $event)" (dateChange)="addToDateEvent('change', $event)">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon class="material-icons" matDatepickerToggleIcon>search</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>                                      
+                        <mat-error *ngIf="vacationForm.controls.frmFromDate?.hasError('matStartDateInvalid')">Invalid From Date</mat-error>
+                        <mat-error *ngIf="vacationForm.controls.frmToDate?.hasError('matEndDateInvalid')">Invalid To Date</mat-error>
+                    </mat-form-field>
+                    <!-- <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    -->
+                    <div>
+                        <button (click)="resetValues()">
+                            <mat-icon class="material-icons">delete</mat-icon>                                                    
+                        </button>
+                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">
+                                <i class="material-icons">person</i>
+                                <p>
+                                    <span class="d-lg-none d-md-block">Account</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

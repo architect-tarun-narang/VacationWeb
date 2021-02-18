@@ -1,0 +1,241 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class='material-icons'>desktop_access_disabled</i>
+                        </div>
+                        <p class="card-category">Leaves</p>
+                        <h3 class="card-title">{{employeeLeaveCount?employeeLeaveCount:0}}
+                            <small></small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i> This year
+                            <!-- <a href="javascript:void(0)">Get More Space...</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class='material-icons'>flight_takeoff</i>
+                        </div>
+                        <p class="card-category">Travel</p>
+                        <h3 class="card-title">{{employeeTravelCount?employeeTravelCount:0}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i> This year
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon">
+                            <i class='material-icons'>local_library</i>
+                        </div>
+                        <p class="card-category">Training</p>
+                        <h3 class="card-title">{{employeeTrainingCount?employeeTrainingCount:0}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i> This year
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class='material-icons'>home</i>
+                        </div>
+                        <p class="card-category">WFH Adhoc</p>
+                        <h3 class="card-title">{{employeeWFHAdhocCount}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i> This year
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title">Employees Leave</h4>
+                        <p class="card-category">Leaves taken this month</p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Leave Days</th>
+                                <th>Remarks</th>
+                            </thead>
+                            <ng-container *ngIf='allLeave?.length;'>
+                                <tbody *ngFor="let empLeave of allLeave">                                                                
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{empLeave.employeeName}}<small>({{empLeave.empCode}})</small></td>
+                                        <td>{{empLeave.strDateFrom}}</td>
+                                        <td>{{empLeave.strDateTo}}</td>
+                                        <td>{{empLeave.durationDays}}</td>
+                                        <td>{{empLeave.vacationRemarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Employees Travel</h4>
+                        <p class="card-category">Travel for this month</p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Travel Days</th>
+                                <th>Remarks</th>
+                            </thead>
+                            <ng-container *ngIf='allTravel?.length'>
+                                <tbody *ngFor="let empTravel of allTravel">                                                                
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{empTravel.employeeName}}<small>({{empTravel.empCode}})</small></td>
+                                        <td>{{empTravel.strDateFrom}}</td>
+                                        <td>{{empTravel.strDateTo}}</td>
+                                        <td>{{empTravel.durationDays}}</td>
+                                        <td>{{empTravel.vacationRemarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Employees Training</h4>
+                        <p class="card-category">Training applied for this month</p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Training</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Training Days</th>
+                                <th>Training Hours</th>
+                                <th>Remarks</th>
+                            </thead>
+                            <ng-container *ngIf='allTraining?.length'>
+                                <tbody *ngFor="let empTraining of allTraining">                                                                
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{empTraining.employeeName}}<small>({{empTraining.empCode}})</small></td>
+                                        <td>{{empTraining.trainingName}}</td>
+                                        <td>{{empTraining.strDateFrom}}</td>
+                                        <td>{{empTraining.strDateTo}}</td>
+                                        <td>{{empTraining.durationDays}}</td>
+                                        <td>{{empTraining.trainingHours}}</td>
+                                        <td>{{empTraining.trainingRemarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Employees Adhoc WFH</h4>
+                        <p class="card-category">Adhoc WFH applied for this month</p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>WFH Days</th>
+                                <th>Remarks</th>
+                            </thead>
+                            <ng-container *ngIf='allWFHAdhoc?.length'>
+                                <tbody *ngFor="let wfhAdhoc of allWFHAdhoc">                                                                
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{wfhAdhoc.employeeName}}<small>({{wfhAdhoc.empCode}})</small></td>
+                                        <td>{{wfhAdhoc.strDateFrom}}</td>
+                                        <td>{{wfhAdhoc.strDateTo}}</td>
+                                        <td>{{wfhAdhoc.durationDays}}</td>
+                                        <td>{{wfhAdhoc.vacationRemarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title">Fixed Days - WFH</h4>
+                        <p class="card-category">Employees on WFH</p>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>WFH Days</th>
+                            </thead>
+                            <ng-container *ngIf='allWFHDays?.length'>
+                                <tbody *ngFor="let wfhDays of allWFHDays">                                                                
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{wfhDays.employeeName}}<small>({{wfhDays.empCode}})</small></td>
+                                        <td>{{wfhDays.wfhFixedDay}}</td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div> 
